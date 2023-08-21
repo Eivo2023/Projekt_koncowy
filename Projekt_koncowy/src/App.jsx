@@ -1,33 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
+import React from 'react'
 import './App.css'
+import MovieList from './components/MovieList';
+import MovieTitle from './components/MovieTitle';
+import MovieSearch from './components/MovieSearch';
 
-function App() {
-  const [count, setCount] = useState(0)
+
+const App = () => {
+  const [movies, setMovies] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
+
+  const showMovie = async () => {
+    const url = "http://www.omdbapi.com/?s=top gun&apikey=4ab53b88";
+    const response = await fetch(url);
+    const responseJson = await response.json();
+    console.log(responseJson);
+    setMovies(responseJson.Search);
+  }
+
+  useEffect(() => {
+    showMovie();
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className='main_container'>
+        <div className='header_container'>
+        <MovieTitle title='Find Your movie'/>
+        <MovieSearch />
+        </div>
+        <div className='movie_container'>
+        <MovieList movies = {movies} />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
