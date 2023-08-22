@@ -10,27 +10,29 @@ const App = () => {
   const [movies, setMovies] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
-  const showMovie = async () => {
-    const url = "http://www.omdbapi.com/?s=top gun&apikey=4ab53b88";
+  const showMovie = async (searchValue) => {
+    const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=4ab53b88`;
     const response = await fetch(url);
     const responseJson = await response.json();
-    console.log(responseJson);
-    setMovies(responseJson.Search);
-  }
+
+    if (responseJson.Search) {
+      setMovies(responseJson.Search);
+    }
+  };
 
   useEffect(() => {
-    showMovie();
-  }, []);
+    showMovie(searchValue);
+  }, [searchValue]);
 
   return (
     <>
       <div className='main_container'>
         <div className='header_container'>
         <MovieTitle title='Find Your movie'/>
-        <MovieSearch />
+        <MovieSearch searchValue={searchValue} setSearchValue={setSearchValue} />
         </div>
         <div className='movie_container'>
-        <MovieList movies = {movies} />
+        <MovieList movies={movies} />
         </div>
       </div>
     </>

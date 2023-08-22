@@ -1,10 +1,10 @@
 import React from 'react'
 import search from '/src/assets/search.svg'
 
-const MovieSearch = () => {
+const MovieSearch = (props) => {
     return (
         <div className='search_bar'>
-            <input placeholder='Type to search Your movie...'></input>
+            <input value={props.value} onChange={(event) => props.setSearchValue(event.target.value)} placeholder='Type to search Your movie...'></input>
             <span><img src={search} alt='search' className='search_icon'/></span>
         </div>
     )
