@@ -10,4 +10,4 @@ const MovieSearch = (props) => {
     )
 }
 
-export default MovieSearch;
+export default MovieSearch; 
