@@ -5,9 +5,16 @@ const MovieList = (props) => {
     return (
         <>
             {props.movies.map((movie, index) => (
-            <div className='poster_container'>
+            <div className='poster_container' key={movie.imdbID}>
                 <img src={movie.Poster} alt='Movie poster'></img>
-                <div onClick={()=> props.handleFavouriteClick(movie)} className='poster_overlay'>
+                <div
+                  onClick={() => {
+                    if (!movie.isFavourite) {
+                      props.handleFavouriteClick(movie);
+                    }
+                  }}
+                  className={`poster_overlay ${movie.isFavourite ? 'disabled' : ''}`}
+                >
                     <FavouriteComponent />
                 </div>
             </div>

@@ -29,14 +29,24 @@ const App = () => {
   }, [searchValue]);
 
   const addFavouriteMovie = (movie) => {
+    const updatedMovies = movies.map((m) =>
+      m.imdbID === movie.imdbID ? { ...m, isFavourite: true } : m
+    );
+    setMovies(updatedMovies);
+  
     const newFavouriteList = [...favourites, movie];
     setFavourites(newFavouriteList);
+
+    localStorage.setItem('favourites', JSON.stringify(newFavouriteList));
   }
 
   const removeFavouriteMovie = (movie) => {
     const newFavouriteList = favourites.filter((favourite)=> favourite.imdbID !== movie.imdbID);
     setFavourites(newFavouriteList);
+
+    localStorage.setItem('favourites', JSON.stringify(newFavouriteList));
   }
+
 
   return (
     <>
