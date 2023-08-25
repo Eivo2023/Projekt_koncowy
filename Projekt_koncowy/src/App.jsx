@@ -42,6 +42,8 @@ const App = () => {
   const removeFavouriteMovie = (movie) => {
     const newFavouriteList = favourites.filter((favourite)=> favourite.imdbID !== movie.imdbID);
     setFavourites(newFavouriteList);
+
+    localStorage.setItem('favourites', JSON.stringify(newFavouriteList));
   }
 
     // saving data to localStorage
