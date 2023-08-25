@@ -20,13 +20,14 @@ const App = () => {
     const responseJson = await response.json();
 
     if (responseJson.Search) {
-      setMovies(responseJson.Search);
+      setMovies(responseJson.Search); 
     }
   };
 
   useEffect(() => {
     showMovie(searchValue);
   }, [searchValue]);
+  
 
   const addFavouriteMovie = (movie) => {
     const updatedMovies = movies.map((m) =>
@@ -36,17 +37,24 @@ const App = () => {
   
     const newFavouriteList = [...favourites, movie];
     setFavourites(newFavouriteList);
-
-    localStorage.setItem('favourites', JSON.stringify(newFavouriteList));
   }
 
   const removeFavouriteMovie = (movie) => {
     const newFavouriteList = favourites.filter((favourite)=> favourite.imdbID !== movie.imdbID);
     setFavourites(newFavouriteList);
-
-    localStorage.setItem('favourites', JSON.stringify(newFavouriteList));
   }
 
+    // saving data to localStorage
+    useEffect(() => {
+      localStorage.setItem('favourites', JSON.stringify(favourites));
+    }, [favourites]);
+  
+    useEffect(() => {
+      const storedFavourites = localStorage.getItem('favourites');
+      if (storedFavourites) {
+        setFavourites(JSON.parse(storedFavourites));
+      }
+    }, []);
 
   return (
     <>
